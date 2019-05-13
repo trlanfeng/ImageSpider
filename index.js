@@ -6,6 +6,8 @@ const pageSize = 20;
 
 const testUrl = 'https://huaban.com/boards/46589133/';
 
+let originUrl = '';
+
 async function getPageData(url) {
     const res = await axios.get(url, {
         headers: {
@@ -29,7 +31,7 @@ async function getPageData(url) {
             return;
         } else {
             max = data.board.pins[pinsCount - 1].pin_id;
-            url = `${testUrl}?max=${max}&limit=${pageSize}`;
+            url = `${originUrl}?max=${max}&limit=${pageSize}`;
             getPageData(url);
         }
     });
@@ -52,8 +54,8 @@ function getAndSaveImage(list, path) {
 }
 
 async function main() {
-    const url = process.argv[2];
-    let data = await getPageData(url);
+    originUrl = process.argv[2];
+    let data = await getPageData(originUrl);
 }
 
 main();
